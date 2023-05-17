@@ -43,17 +43,7 @@ my_cur = my_cnx.cursor()
 
 
 
-# Get the name of the new fruit from the user
-new_fruit = st.text_input('Enter the name of the new fruit:')
-
-# Insert the new fruit into the database table when the user clicks the button
-if st.button('Add Fruit'):
-    my_cur.execute(f"INSERT INTO pc_rivery_db.public.fruit_load_list (fruit_name) VALUES ('{new_fruit}')")
-    my_cnx.commit()
-    st.success(f"{new_fruit} added to the fruit load list.")
-
-# Fetch all the fruits from the database table and display them in a dataframe
-my_cur.execute('SELECT * FROM pc_rivery_db.public.fruit_load_list')
-my_data_rows = my_cur.fetchall()
-st.header('The fruit load list contains:')
-st.dataframe(my_data_rows)
+def insert_row_snowflake(new_fruit):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("insert into fruit_load_list values ('"+ new_fruit +"')")
+        return "Thanks for adding" + new_fruit
