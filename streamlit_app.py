@@ -41,7 +41,7 @@ my_data_rows = my_cur.fetchall()
 streamlit.header('The fruit load list contains:')
 streamlit.dataframe(my_data_rows)
 
-new_fruit = streamlit.text_input('What fruit would you like information about?','Kiwi')
+new_fruit = streamlit.text_input('What fruit would you like information about?')
 # fruits_to_add_show = my_fruit_to_add.loc[fruits_selected]
 
 def insert_row_snowflake(new_fruit):
