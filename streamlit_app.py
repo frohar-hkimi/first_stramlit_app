@@ -42,19 +42,18 @@ my_cur = my_cnx.cursor()
 # streamlit.dataframe(my_data_rows)
 
 
-# Display input field for the fruit name
-fruit_name = st.text_input("Enter the fruit name:")
 
-# Add the fruit to the fruit load list if a name is provided
-if fruit_name:
-    cur.execute("INSERT INTO pc_rivery_db.public.fruit_load_list (fruit_name) VALUES (%s)", (fruit_name,))
-    cnx.commit()
-    st.success(f"Added {fruit_name} to the fruit load list.")
+# Get the name of the new fruit from the user
+new_fruit = st.text_input('Enter the name of the new fruit:')
 
-# Retrieve all rows from the fruit load list
-cur.execute('SELECT * FROM pc_rivery_db.public.fruit_load_list')
-data_rows = cur.fetchall()
+# Insert the new fruit into the database table when the user clicks the button
+if st.button('Add Fruit'):
+    my_cur.execute(f"INSERT INTO pc_rivery_db.public.fruit_load_list (fruit_name) VALUES ('{new_fruit}')")
+    my_cnx.commit()
+    st.success(f"{new_fruit} added to the fruit load list.")
 
-# Display the fruit load list
+# Fetch all the fruits from the database table and display them in a dataframe
+my_cur.execute('SELECT * FROM pc_rivery_db.public.fruit_load_list')
+my_data_rows = my_cur.fetchall()
 st.header('The fruit load list contains:')
-st.dataframe(data_rows)
+st.dataframe(my_data_rows)
